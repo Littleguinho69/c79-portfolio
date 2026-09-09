@@ -178,7 +178,7 @@ class Component extends DCLogic {
       out.push(b);
     });
     out.sort((a, b) => b.n - a.n);
-    return out.slice(0, 44);
+    return out.slice(0, 30);
   }
 
   track(blobs) {
@@ -193,19 +193,44 @@ class Component extends DCLogic {
       }
       if (best) {
         best.seen = true; best.ttl = 22;
-        best.cx += (b.cx - best.cx) * 0.32;
-        best.cy += (b.cy - best.cy) * 0.32;
-        best.x0 += (b.x0 - best.x0) * 0.3; best.x1 += (b.x1 - best.x1) * 0.3;
-        best.y0 += (b.y0 - best.y0) * 0.3; best.y1 += (b.y1 - best.y1) * 0.3;
+        best.tcx = b.cx; best.tcy = b.cy;
+        best.tx0 = b.x0; best.tx1 = b.x1; best.ty0 = b.y0; best.ty1 = b.y1;
         best.n = b.n; best.lum = b.lum;
         best.age = Math.min(1, best.age + 0.09);
       } else {
-        live.push({ id: this.nextId++, cx: b.cx, cy: b.cy, x0: b.x0, x1: b.x1, y0: b.y0, y1: b.y1, n: b.n, lum: b.lum, ttl: 22, age: 0, seen: true });
+        live.push({ id: this.nextId++, cx: b.cx, cy: b.cy, x0: b.x0, x1: b.x1, y0: b.y0, y1: b.y1, tcx: b.cx, tcy: b.cy, tx0: b.x0, tx1: b.x1, ty0: b.y0, ty1: b.y1, n: b.n, lum: b.lum, ttl: 22, age: 0, seen: true });
       }
     }
     if (this.nextId > 999) this.nextId = 1;
     this.tracks = live.filter((t) => { if (!t.seen) { t.ttl -= 2; t.age = Math.max(0, t.age - 0.06); } return t.ttl > 0; });
     return this.tracks;
+  }
+
+  sprite(base) {
+    this.sprites = this.sprites || new Map();
+    let s = this.sprites.get(base);
+    if (s) return s;
+    s = document.createElement("canvas");
+    s.width = s.height = 96;
+    const c = s.getContext("2d");
+    const g = c.createRadialGradient(48, 48, 0, 48, 48, 48);
+    g.addColorStop(0, "rgba(" + base + ",0.5)");
+    g.addColorStop(0.42, "rgba(" + base + ",0.14)");
+    g.addColorStop(1, "rgba(" + base + ",0)");
+    c.fillStyle = g;
+    c.fillRect(0, 0, 96, 96);
+    this.sprites.set(base, s);
+    return s;
+  }
+
+  advance(fs) {
+    const kc = 1 - Math.pow(0.68, fs), kb = 1 - Math.pow(0.7, fs);
+    for (const t of this.tracks) {
+      if (t.tcx === undefined) continue;
+      t.cx += (t.tcx - t.cx) * kc; t.cy += (t.tcy - t.cy) * kc;
+      t.x0 += (t.tx0 - t.x0) * kb; t.x1 += (t.tx1 - t.x1) * kb;
+      t.y0 += (t.ty0 - t.y0) * kb; t.y1 += (t.ty1 - t.y1) * kb;
+    }
   }
 
   frame = (now) => {
@@ -216,11 +241,14 @@ class Component extends DCLogic {
   tick(now) {
     const cv = this.blobRef.current, v = this.videoRef.current;
     if (!cv || !v) return;
-    if (now - this.last < 32) return;
+    if (now - this.last < 21) return;
+    const dt = Math.min(64, now - (this.last || now - 22));
     this.last = now;
+    const fs = Math.max(0.25, dt / 33.33);
+    const ease = (r) => 1 - Math.pow(1 - r, fs);
     if (document.hidden || !this.visible || v.readyState < 2) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const dpr = 1;
     const W = Math.round(cv.clientWidth * dpr), H = Math.round(cv.clientHeight * dpr);
     if (!W || !H) return;
     if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
@@ -235,29 +263,34 @@ class Component extends DCLogic {
     const rate = rising
       ? (modeIn === "Rápida" ? 0.26 : modeIn === "Lenta" ? 0.055 : 0.13)
       : (modeOut === "Rápida" ? 0.15 : modeOut === "Rasto" ? 0.04 : modeOut === "Lenta" ? 0.03 : 0.065);
-    this.hoverK += (hk - this.hoverK) * rate;
+    this.hoverK += (hk - this.hoverK) * ease(rate);
     if (hoverOnly && this.hoverK < 0.003) { ctx.clearRect(0, 0, W, H); return; }
 
-    let data;
-    try {
-      this.sctx.drawImage(v, 0, 0, SW, SH);
-      data = this.sctx.getImageData(0, 0, SW, SH).data;
-    } catch (e) { this.stop(); return; }
+    if (now - (this.lastDet || 0) >= 30) {
+      this.lastDet = now;
+      let data;
+      try {
+        this.sctx.drawImage(v, 0, 0, SW, SH);
+        data = this.sctx.getImageData(0, 0, SW, SH).data;
+      } catch (e) { this.stop(); return; }
 
-    const L = this.lum;
-    let sum = 0;
-    for (let i = 0, p = 0; i < L.length; i++, p += 4) {
-      const l = (data[p] * 0.299 + data[p + 1] * 0.587 + data[p + 2] * 0.114) / 255;
-      L[i] = l; sum += l;
+      const L = this.lum;
+      let sum = 0;
+      for (let i = 0, p = 0; i < L.length; i++, p += 4) {
+        const l = (data[p] * 0.299 + data[p + 1] * 0.587 + data[p + 2] * 0.114) / 255;
+        L[i] = l; sum += l;
+      }
+      const mean = sum / L.length;
+
+      const d = Math.abs(mean - this.prevMean);
+      this.prevMean = mean;
+      const hit = Math.min(1, d * 34) * this.p("reactivity", 1);
+      this.energy += (hit - this.energy) * (hit > this.energy ? 0.5 : 0.06);
+
+      this.track(this.detect(this.p("densidade", 1)));
     }
-    const mean = sum / L.length;
-
-    const d = Math.abs(mean - this.prevMean);
-    this.prevMean = mean;
-    const hit = Math.min(1, d * 34) * this.p("reactivity", 1);
-    this.energy += (hit - this.energy) * (hit > this.energy ? 0.5 : 0.06);
-
-    const tracks = this.track(this.detect(this.p("densidade", 1)));
+    this.advance(fs);
+    const tracks = this.tracks;
 
     const kx = W / SW, ky = H / SH;
     const amt = this.p("blobAmount", 1);
@@ -350,8 +383,6 @@ class Component extends DCLogic {
         g.addColorStop(0, "rgba(" + base + ",0)");
         g.addColorStop(0.22, "rgba(" + base + "," + Math.min(0.9, a * 0.5).toFixed(3) + ")");
         g.addColorStop(1, "rgba(" + base + "," + Math.min(1, a * 1.45).toFixed(3) + ")");
-        ctx.shadowColor = "rgba(" + base + "," + (glow * 0.7).toFixed(3) + ")";
-        ctx.shadowBlur = glow * 8 * dpr;
         ctx.strokeStyle = g;
         ctx.lineWidth = 1.35 * dpr;
         ctx.beginPath();
@@ -360,8 +391,12 @@ class Component extends DCLogic {
         ctx.stroke();
       }
 
-      ctx.shadowColor = "rgba(" + base + "," + (glow * 0.85).toFixed(3) + ")";
-      ctx.shadowBlur = glow * 22 * dpr;
+      if (glow > 0.02) {
+        const gs = Math.max(w, h) + 40 * dpr;
+        ctx.globalAlpha = Math.min(0.8, a * glow * 1.2);
+        ctx.drawImage(this.sprite(base), dotX - gs / 2, dotY - gs / 2, gs, gs);
+        ctx.globalAlpha = 1;
+      }
 
       ctx.strokeStyle = "rgba(" + base + "," + a.toFixed(3) + ")";
       ctx.lineWidth = 1.15 * dpr;
@@ -375,7 +410,6 @@ class Component extends DCLogic {
       ctx.moveTo(x + w - tick, y + h); ctx.lineTo(x + w, y + h); ctx.lineTo(x + w, y + h - tick);
       ctx.stroke();
 
-      ctx.shadowBlur = 0;
       const cd = (1.6 + this.energy * 1.4) * dpr;
       ctx.fillStyle = "rgba(" + base + "," + Math.min(0.95, a * 2).toFixed(3) + ")";
       ctx.fillRect(t.cx * kx - cd, t.cy * ky - cd, cd * 2, cd * 2);
@@ -385,12 +419,10 @@ class Component extends DCLogic {
         ctx.fillText(String(t.id).padStart(3, "0"), x, y - 5 * dpr);
       }
     }
-    ctx.shadowBlur = 0;
-
     this.sc = (this.sc || 0) + 1;
     if (this.sc % 5 === 0) {
       window.dispatchEvent(new CustomEvent("c79:bt", {
-        detail: { shown: shown, blobs: tracks.length, cover: cover / L.length }
+        detail: { shown: shown, blobs: tracks.length, cover: cover / (SW * SH) }
       }));
     }
   }
