@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @font-face { font-family: 'BNCringeSerifLight'; src: url('BNCringeSerifLight.ttf') format('truetype'); font-weight: 300 400; font-style: normal; font-display: swap; }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    @keyframes c79-panel { from { opacity: 0.3; filter: blur(18px); transform: scale(1.045); } 60% { opacity: 1; } to { opacity: 1; filter: blur(0); transform: none; } }
+    @keyframes c79-modal-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes c79-panel-out { from { opacity: 1; filter: blur(0); transform: none; } to { opacity: 0; filter: blur(14px); transform: scale(1.03); } }
+  </style>
+</helmet>
+<div style="background:#0a0a0b; font-family:'Inter',sans-serif; color:#f5f1e8">
+  <section id="expertise" style="max-width:1280px; margin:0 auto; padding:140px 24px 120px; box-sizing:border-box">
+    <p style="margin:0 0 64px; font-size:12px; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:#c8974a">Expertise</p>
+    <div style="display:flex; flex-direction:column; border-bottom:1px solid rgba(255,255,255,0.09)">
+
+      <button type="button" onClick="{{ toggleCine }}" style="display:flex; align-items:center; justify-content:space-between; gap:24px; width:100%; padding:26px 0; margin:0; border:none; border-top:1px solid rgba(255,255,255,0.09); background:transparent; text-align:left; cursor:pointer; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:300; font-size:clamp(34px,5.3vw,66px); line-height:1.02; letter-spacing:-0.005em; color:rgba(245,241,232,0.5); transition:color 320ms ease" style-hover="color:#f0dcb4">
+        <span>Cinematography</span>
+        <span style="display:flex; align-items:center; gap:14px; flex:0 0 auto; font-family:'Inter',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:#c8974a">
+          20 frames
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transition:transform 340ms cubic-bezier(.16,1,.3,1); transform:{{ cineCaret }}"><path d="M6 9l6 6 6-6"></path></svg>
+        </span>
+      </button>
+
+      <sc-if value="{{ openCine }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:4px 0 48px; animation:{{ panelAnim }}">
+          <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); grid-auto-rows:130px; grid-auto-flow:dense; gap:10px">
+            <sc-for list="{{ frames }}" as="f" hint-placeholder-count="12">
+              <button type="button" onClick="{{ f.open }}" style="grid-column:{{ f.gc }}; grid-row:{{ f.gr }}; padding:0; margin:0; border:1px solid rgba(255,255,255,0.09); background:#111; overflow:hidden; cursor:pointer; border-radius:2px">
+                <sc-if value="{{ f.ready }}" hint-placeholder-val="{{ true }}">
+                  <img src="{{ f.thumb }}" alt="" loading="lazy" decoding="async" fetchPriority="low" style="width:100%; height:100%; object-fit:cover; display:block; opacity:0.82; transition:opacity 400ms ease, transform 700ms cubic-bezier(.16,1,.3,1)" style-hover="opacity:1; transform:scale(1.04)">
+                </sc-if>
+              </button>
+            </sc-for>
+          </div>
+          <a href="https://drive.google.com/drive/folders/16uvZlsdmnsyIp4-O-dDHBz11ql8YocxE" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:28px; padding-bottom:4px; font-size:14px; color:#d9a24a; text-decoration:none; border-bottom:1px solid rgba(217,162,74,0.4); transition:border-color 260ms ease" style-hover="border-bottom-color:#d9a24a">Open folder in Drive</a>
+        </div>
+      </sc-if>
+
+      <button type="button" onClick="{{ toggleColor }}" style="display:flex; align-items:center; justify-content:space-between; gap:24px; width:100%; padding:26px 0; margin:0; border:none; border-top:1px solid rgba(255,255,255,0.09); background:transparent; text-align:left; cursor:pointer; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:300; font-size:clamp(34px,5.3vw,66px); line-height:1.02; letter-spacing:-0.005em; color:rgba(245,241,232,0.5); transition:color 320ms ease" style-hover="color:#f0dcb4">
+        <span>Color Grading</span>
+        <span style="display:flex; align-items:center; gap:14px; flex:0 0 auto; font-family:'Inter',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:#c8974a">
+          4 clips
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transition:transform 340ms cubic-bezier(.16,1,.3,1); transform:{{ colorCaret }}"><path d="M6 9l6 6 6-6"></path></svg>
+        </span>
+      </button>
+
+      <sc-if value="{{ openColor }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:4px 0 48px; animation:{{ panelAnim }}">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:28px">
+            <sc-for list="{{ clips }}" as="c" hint-placeholder-count="4">
+              <div>
+                <div style="position:relative; aspect-ratio:16 / 9; overflow:hidden; border-radius:3px; border:1px solid rgba(255,255,255,0.09); background:#000">
+                  <a href="{{ c.src }}" target="_blank" style="display:block; width:100%; height:100%; cursor:pointer;"><img src="{{ c.image }}" alt="" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block; transition:transform 400ms ease" style-hover="transform:scale(1.04)"></a>
+                </div>
+                <p style="margin:12px 0 0; font-size:12px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:rgba(245,241,232,0.5)">{{ c.label }}</p>
+              </div>
+            </sc-for>
+          </div>
+          <a href="https://drive.google.com/drive/folders/1_Mtgbx5umC9rzNPZNWPVfR4r9AohtYF2" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:32px; padding-bottom:4px; font-size:14px; color:#d9a24a; text-decoration:none; border-bottom:1px solid rgba(217,162,74,0.4); transition:border-color 260ms ease" style-hover="border-bottom-color:#d9a24a">Open folder in Drive</a>
+        </div>
+      </sc-if>
+
+      <button type="button" onClick="{{ toggleCd }}" style="display:flex; align-items:center; justify-content:space-between; gap:24px; width:100%; padding:26px 0; margin:0; border:none; border-top:1px solid rgba(255,255,255,0.09); background:transparent; text-align:left; cursor:pointer; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:300; font-size:clamp(34px,5.3vw,66px); line-height:1.02; letter-spacing:-0.005em; color:rgba(245,241,232,0.5); transition:color 320ms ease" style-hover="color:#f0dcb4">
+        <span>Creative Direction</span>
+        <span style="display:flex; align-items:center; gap:14px; flex:0 0 auto; font-family:'Inter',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:#c8974a">
+          3 notas
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transition:transform 340ms cubic-bezier(.16,1,.3,1); transform:{{ cdCaret }}"><path d="M6 9l6 6 6-6"></path></svg>
+        </span>
+      </button>
+
+      <sc-if value="{{ openCd }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap:56px; padding:12px 0 56px; animation:{{ panelAnim }}">
+          <div style="display:flex; flex-direction:column; gap:40px">
+            <div>
+              <p style="margin:0 0 12px; font-size:12px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:#c8974a">IMPÉRIO! — colaboração entre dois artistas</p>
+              <p style="margin:0; max-width:520px; font-size:16px; line-height:1.75; color:rgba(245,241,232,0.72); text-wrap:pretty">Todo o clipe foi construído em uma única parede branca, com duas fontes de luz: uma colorida e uma neutra. Sem espaço para deslocamento em cena, o movimento veio da câmera e da própria luz, trabalhando juntas para criar variação de plano. Na pós, efeitos visuais pontuais sustentam a atenção nos momentos de virada da música. Uma parede branca e os dois artistas seguram o clipe inteiro.</p>
+            </div>
+            <div>
+              <p style="margin:0 0 12px; font-size:12px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:#c8974a">Hawaiana — conceito praiano</p>
+              <p style="margin:0; max-width:520px; font-size:16px; line-height:1.75; color:rgba(245,241,232,0.72); text-wrap:pretty">Direção de arte praiana, com uma atriz no papel de par romântico para conectar a imagem à vibe do som. Gravado na praia com luz natural como fonte principal: planos em contra-sol para silhueta, usando o reflexo da luz no mar como elemento de composição.</p>
+            </div>
+            <div>
+              <p style="margin:0 0 12px; font-size:12px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:#c8974a">Uma Voz — três dias de gravação</p>
+              <p style="margin:0; max-width:520px; font-size:16px; line-height:1.75; color:rgba(245,241,232,0.72); text-wrap:pretty">Três diárias, cada uma com sua própria linguagem. Um dia em estúdio, acompanhando a gravação da música. Uma noite com amigos atuando, com a luz dos postes como fonte principal. E uma manhã com o músico sozinho, tendo o sol como única fonte. A alternância entre técnicas de iluminação e de efeito visual dá textura diferente a cada bloco, mantendo o mesmo fio narrativo do começo ao fim.</p>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:0">
+            <div style="display:flex; gap:20px; padding:20px 0; border-top:1px solid rgba(255,255,255,0.09)">
+              <span style="flex:0 0 auto; font-size:12px; font-weight:500; letter-spacing:0.16em; color:#c8974a; padding-top:5px">01</span>
+              <div>
+                <p style="margin:0 0 6px; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:400; font-size:27px; line-height:1.12; color:#f5f1e8">Conceito</p>
+                <p style="margin:0; font-size:14px; line-height:1.65; color:rgba(245,241,232,0.6)">Referência, paleta e tratamento definidos antes da câmera.</p>
+              </div>
+            </div>
+            <div style="display:flex; gap:20px; padding:20px 0; border-top:1px solid rgba(255,255,255,0.09)">
+              <span style="flex:0 0 auto; font-size:12px; font-weight:500; letter-spacing:0.16em; color:#c8974a; padding-top:5px">02</span>
+              <div>
+                <p style="margin:0 0 6px; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:400; font-size:27px; line-height:1.12; color:#f5f1e8">Decupagem</p>
+                <p style="margin:0; font-size:14px; line-height:1.65; color:rgba(245,241,232,0.6)">Plano a plano: luz, movimento e ordem resolvidos no papel.</p>
+              </div>
+            </div>
+            <div style="display:flex; gap:20px; padding:20px 0; border-top:1px solid rgba(255,255,255,0.09); border-bottom:1px solid rgba(255,255,255,0.09)">
+              <span style="flex:0 0 auto; font-size:12px; font-weight:500; letter-spacing:0.16em; color:#c8974a; padding-top:5px">03</span>
+              <div>
+                <p style="margin:0 0 6px; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:400; font-size:27px; line-height:1.12; color:#f5f1e8">Entrega</p>
+                <p style="margin:0; font-size:14px; line-height:1.65; color:rgba(245,241,232,0.6)">Montagem, color e som fechados em um corte final.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <button type="button" onClick="{{ toggleDrone }}" style="display:flex; align-items:center; justify-content:space-between; gap:24px; width:100%; padding:26px 0; margin:0; border:none; border-top:1px solid rgba(255,255,255,0.09); background:transparent; text-align:left; cursor:pointer; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:300; font-size:clamp(34px,5.3vw,66px); line-height:1.02; letter-spacing:-0.005em; color:rgba(245,241,232,0.5); transition:color 320ms ease" style-hover="color:#f0dcb4">
+        <span>Drone Cinematography</span>
+        <span style="display:flex; align-items:center; gap:14px; flex:0 0 auto; font-family:'Inter',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:#c8974a">
+          4 fotos · 2 clips
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transition:transform 340ms cubic-bezier(.16,1,.3,1); transform:{{ droneCaret }}"><path d="M6 9l6 6 6-6"></path></svg>
+        </span>
+      </button>
+
+      <sc-if value="{{ openDrone }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:4px 0 48px; animation:{{ panelAnim }}">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap:28px">
+            <sc-for list="{{ droneClips }}" as="c" hint-placeholder-count="2">
+              <div>
+                <div style="position:relative; aspect-ratio:16 / 9; overflow:hidden; border-radius:3px; border:1px solid rgba(255,255,255,0.09); background:#000">
+                  <a href="{{ c.src }}" target="_blank" style="display:block; width:100%; height:100%; cursor:pointer;"><img src="{{ c.image }}" alt="" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block; transition:transform 400ms ease" style-hover="transform:scale(1.04)"></a>
+                </div>
+                <p style="margin:12px 0 0; font-size:12px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:rgba(245,241,232,0.5)">{{ c.label }}</p>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap:10px; margin-top:28px">
+            <sc-for list="{{ dronePhotos }}" as="d" hint-placeholder-count="4">
+              <button type="button" onClick="{{ d.open }}" style="padding:0; margin:0; aspect-ratio:3 / 2; border:1px solid rgba(255,255,255,0.09); background:#111; overflow:hidden; cursor:pointer; border-radius:2px">
+                <img src="{{ d.thumb }}" alt="" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block; opacity:0.82; transition:opacity 400ms ease, transform 700ms cubic-bezier(.16,1,.3,1)" style-hover="opacity:1; transform:scale(1.04)">
+              </button>
+            </sc-for>
+          </div>
+          <a href="https://drive.google.com/drive/folders/1dJbPRJjXee-8JiDR03A12DgVA2aV09iq" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:28px; padding-bottom:4px; font-size:14px; color:#d9a24a; text-decoration:none; border-bottom:1px solid rgba(217,162,74,0.4); transition:border-color 260ms ease" style-hover="border-bottom-color:#d9a24a">Open folder in Drive</a>
+        </div>
+      </sc-if>
+
+    </div>
+  </section>
+
+  <sc-if value="{{ lightOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeLight }}" style="position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center; padding:32px; box-sizing:border-box; background:rgba(0,0,0,0.94); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); cursor:zoom-out; animation:c79-modal-in 300ms ease both">
+      <button type="button" onClick="{{ closeLight }}" aria-label="Close" style="position:absolute; top:24px; right:24px; display:flex; align-items:center; justify-content:center; width:44px; height:44px; padding:0; border:none; background:transparent; color:rgba(245,241,232,0.7); cursor:pointer; transition:color 200ms ease" style-hover="color:#f5f1e8">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+      <img src="{{ lightSrc }}" alt="" style="max-width:100%; max-height:100%; object-fit:contain; display:block; border-radius:2px">
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const FRAMES = [
+  "photos/f01.jpg", "photos/f02.jpg", "photos/f03.jpg", "photos/f04.jpg", "photos/f05.jpg", "photos/f06.jpg", "photos/f07.jpg", "photos/f08.jpg", "photos/f09.jpg", "photos/f10.jpg", "photos/f11.jpg", "photos/f12.jpg", "photos/f13.jpg", "photos/f14.jpg", "photos/f15.jpg", "photos/f16.jpg", "photos/f17.jpg", "photos/f18.jpg", "photos/f19.jpg", "photos/f20.jpg"
+];
+
+const SPANS = [
+  ["span 2", "span 2"], ["span 1", "span 1"], ["span 1", "span 2"],
+  ["span 1", "span 1"], ["span 2", "span 1"], ["span 1", "span 1"],
+  ["span 1", "span 2"], ["span 2", "span 2"], ["span 1", "span 1"]
+];
+
+const CLIPS = [
+  { label: "Clipe 1", id: "194vjdFYibgoeLPVOP3leZ22jCe6VHDY6", image: "photos/thumbs/1.jpg" },
+  { label: "Clipe 2", id: "1NAEeTayIWloa09A1JLY-snsvnaj94rLT", image: "photos/thumbs/2.jpg" },
+  { label: "Clipe 3", id: "1VVfQX966wjka_NcRv6pNLo1SXaiMXwB5", image: "photos/thumbs/3.jpg" },
+  { label: "Clipe 4", id: "1leoUNX7GDraA-cjCLsNFsBVHgO1W4OrY", image: "photos/thumbs/4.jpg" }
+];
+
+const DRONE_CLIPS = [
+  { label: "Esquerda para direita", id: "1r7Uh2jZsaQO45k9GTyzZg0CTZSa7ijx2", image: "photos/thumbs/Esquerda para direita.jpg" },
+  { label: "Drone Zoom Out", id: "1wUN9y6egkNPJk8dKEOUlACeNUs962wzW", image: "photos/thumbs/Drone Zoom Out.jpg" }
+];
+
+const DRONE_PHOTOS = [
+  "photos/d1.jpg", "photos/d2.jpg", "photos/d3.jpg", "photos/d4.jpg"
+];
+
+const thumb = (id, w) => "https://drive.google.com/thumbnail?id=" + id + "&sz=w" + w;
+const preview = (id) => "https://drive.google.com/file/d/" + id + "/preview";
+
+class Component extends DCLogic {
+  state = { open: null, light: null, loaded: 0, closing: null };
+
+  onKeyDown = (e) => {
+    if (e.key === "Escape") this.setState({ light: null });
+  };
+
+  componentDidMount() { document.addEventListener("keydown", this.onKeyDown); }
+  componentWillUnmount() { document.removeEventListener("keydown", this.onKeyDown); this.stopLoading(); clearTimeout(this.closeTimer); }
+
+  toggle(key) {
+    this.setState((s) => {
+      const wasOpen = s.open === key;
+      const next = wasOpen ? null : key;
+      if (next === "cine") this.startLoading(); else this.stopLoading();
+      clearTimeout(this.closeTimer);
+      if (wasOpen) {
+        this.closeTimer = setTimeout(() => this.setState({ closing: null }), 640);
+        return { open: null, closing: key, loaded: s.loaded };
+      }
+      return { open: next, closing: null, loaded: next === "cine" ? 10 : 0 };
+    });
+  }
+
+  startLoading() {
+    this.stopLoading();
+    this.loadTimer = setInterval(() => {
+      this.setState((s) => {
+        const loaded = s.loaded + 6;
+        if (loaded >= FRAMES.length) this.stopLoading();
+        return { loaded };
+      });
+    }, 200);
+  }
+
+  stopLoading() {
+    if (this.loadTimer) { clearInterval(this.loadTimer); this.loadTimer = null; }
+  }
+
+  photo(id, i, gated) {
+    const span = SPANS[i % SPANS.length];
+    return {
+      thumb: id.replace("photos/", "photos/thumbs/"),
+      ready: gated ? i < this.state.loaded : true,
+      gc: span[0],
+      gr: span[1],
+      open: () => this.setState({ light: id })
+    };
+  }
+
+  renderVals() {
+    const open = this.state.open;
+    const closing = this.state.closing;
+    const shown = (k) => open === k || closing === k;
+    const caret = (k) => (open === k ? "rotate(180deg)" : "rotate(0deg)");
+    return {
+      panelAnim: closing
+        ? "c79-panel-out 620ms cubic-bezier(.4,0,1,1) both"
+        : "c79-panel 1150ms cubic-bezier(.16,1,.3,1) both",
+      openCine: shown("cine"),
+      openColor: shown("color"),
+      openCd: shown("cd"),
+      openDrone: shown("drone"),
+      cineCaret: caret("cine"),
+      colorCaret: caret("color"),
+      cdCaret: caret("cd"),
+      droneCaret: caret("drone"),
+      toggleCine: () => this.toggle("cine"),
+      toggleColor: () => this.toggle("color"),
+      toggleCd: () => this.toggle("cd"),
+      toggleDrone: () => this.toggle("drone"),
+      frames: FRAMES.map((id, i) => this.photo(id, i, true)),
+      dronePhotos: DRONE_PHOTOS.map((id, i) => this.photo(id, i, false)),
+      clips: CLIPS.map((c) => ({ label: c.label, src: preview(c.id), image: c.image })),
+      droneClips: DRONE_CLIPS.map((c) => ({ label: c.label, src: preview(c.id), image: c.image })),
+      lightOpen: !!this.state.light,
+      lightSrc: this.state.light || "",
+      closeLight: () => this.setState({ light: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

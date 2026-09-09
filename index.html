@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>c79 — Filmmaker &amp; Director</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @font-face { font-family: 'BNCringeSerifLight'; src: url('BNCringeSerifLight.ttf') format('truetype'); font-weight: 300 400; font-style: normal; font-display: swap; }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 240 3% 4%;
+      --foreground: 0 0% 100%;
+      --muted-foreground: 240 4% 66%;
+      --font-display: 'BNCringeSerifLight', 'BN Cringe Serif Light', 'Cormorant Garamond', serif;
+      --font-body: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: hsl(var(--foreground)); text-decoration: none; }
+    a:hover { color: hsl(var(--foreground)); }
+    @keyframes c79-down { from { opacity: 0; transform: translateY(-26px); } to { opacity: 1; transform: none; } }
+    @keyframes c79-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+    @keyframes c79-fade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes c79-pop { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: none; } }
+    @keyframes c79-rack { from { opacity: 0.3; filter: blur(18px); transform: scale(1.045); } 60% { opacity: 1; } to { opacity: 1; filter: blur(0); transform: none; } }
+    @keyframes c79-rack-out { from { opacity: 1; filter: blur(0); transform: none; } to { opacity: 0; filter: blur(16px); transform: scale(1.03); } }
+    @keyframes c79-fade-out { from { opacity: 1; } to { opacity: 0; } }
+    @keyframes c79-bt-pop { from { opacity: 0; transform: translateY(10px) scale(0.985); } to { opacity: 1; transform: none; } }
+  </style>
+</helmet>
+<div style="position:relative; background:#0a0a0b; font-family:'Inter',sans-serif; color:hsl(0 0% 100%)">
+  <div style="position:relative; min-height:100vh; overflow:hidden">
+    <dc-import name="BackgroundMedia" src="{{ videoSrc }}" grade="{{ grade }}" grain="{{ grain }}" paused="{{ pauseVideo }}" blobs="{{ blobs }}" blob-amount="{{ blobAmount }}" hover-only="{{ hoverOnly }}" raio="{{ raio }}" entrada="{{ entrada }}" saida="{{ saida }}" densidade="{{ densidade }}" min-blob-size="{{ minBlobSize }}" max-blob-size="{{ maxBlobSize }}" glow="{{ glow }}" reactivity="{{ reactivity }}" accent="{{ accent }}" cores="{{ cores }}" ids="{{ ids }}" linhas="{{ linhas }}" hint-size="100%,100%" style="position:absolute; inset:0; z-index:0"></dc-import>
+
+    <div style="position:relative; z-index:10; display:flex; flex-direction:column; min-height:100vh">
+      <dc-import name="Navbar" hint-size="100%,88px"></dc-import>
+      <dc-import name="Hero" hint-size="100%,72vh" style="display:flex; flex:1"></dc-import>
+    </div>
+  </div>
+
+  <dc-import name="SelectedWorks" hint-size="100%,80vh"></dc-import>
+
+  <dc-import name="Expertise-Amber" hint-size="100%,100vh"></dc-import>
+
+  <dc-import name="About" hint-size="100%,70vh"></dc-import>
+
+  <dc-import name="Contact" hint-size="100%,60vh"></dc-import>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;videoSrc&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;c79-portfolio-bg.mp4&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Background&quot;},&quot;grade&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Âmbar quente&quot;,&quot;Teal &amp; âmbar&quot;,&quot;Mono âmbar&quot;],&quot;default&quot;:&quot;Teal &amp; âmbar&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Background&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Background&quot;},&quot;pauseVideo&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Background&quot;},&quot;blobs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;blobAmount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:1.8,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;hoverOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;raio&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:400,&quot;min&quot;:40,&quot;max&quot;:420,&quot;step&quot;:10,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;densidade&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.01,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;minBlobSize&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:2,&quot;max&quot;:400,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;maxBlobSize&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1650,&quot;min&quot;:50,&quot;max&quot;:5000,&quot;step&quot;:50,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.01,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;reactivity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#d5a24e&quot;,&quot;#b8752e&quot;,&quot;#f0dcb4&quot;,&quot;#ffffff&quot;],&quot;default&quot;:&quot;#d5a24e&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;cores&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;ids&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;linhas&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;entrada&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Rápida&quot;,&quot;Suave&quot;,&quot;Lenta&quot;,&quot;Íris&quot;,&quot;Escalonado&quot;],&quot;default&quot;:&quot;Suave&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;saida&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Rápida&quot;,&quot;Suave&quot;,&quot;Lenta&quot;,&quot;Rasto&quot;,&quot;Íris&quot;,&quot;Escalonado&quot;],&quot;default&quot;:&quot;Escalonado&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Blob track&quot;}}">
+class Component extends DCLogic {
+  statRef = React.createRef();
+  coverRef = React.createRef();
+  state = { panel: true };
+
+  v(key, dflt) {
+    const s = this.state[key];
+    if (s !== undefined) return s;
+    const p = this.props[key];
+    return p !== undefined && p !== null && p !== "" ? p : dflt;
+  }
+
+  onStats = (e) => {
+    const d = e.detail || {};
+    if (this.statRef.current) this.statRef.current.textContent = d.shown ? d.shown + " blobs" : "idle";
+    if (this.coverRef.current) this.coverRef.current.textContent = (d.cover || 0).toFixed(3);
+  };
+
+  componentDidMount() { window.addEventListener("c79:bt", this.onStats); }
+  componentWillUnmount() {
+    window.removeEventListener("c79:bt", this.onStats);
+    if (this.state.fileUrl) URL.revokeObjectURL(this.state.fileUrl);
+  }
+
+  drag(key, min, max, step) {
+    return (e) => {
+      const el = e.currentTarget;
+      const move = (ev) => {
+        const r = el.getBoundingClientRect();
+        let t = (ev.clientX - r.left) / r.width;
+        t = t < 0 ? 0 : t > 1 ? 1 : t;
+        this.setState({ [key]: Math.round((min + t * (max - min)) / step) * step });
+      };
+      move(e);
+      const up = () => {
+        window.removeEventListener("pointermove", move);
+        window.removeEventListener("pointerup", up);
+      };
+      window.addEventListener("pointermove", move);
+      window.addEventListener("pointerup", up);
+    };
+  }
+
+  pct(v, min, max) { return ((v - min) / (max - min) * 100).toFixed(2) + "%"; }
+
+  swatch(hex, on) {
+    return "width:30px; height:20px; padding:0; cursor:pointer; border-radius:5px; background:" + hex +
+      "; border:1px solid " + (on ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.16)") +
+      "; box-shadow:" + (on ? "0 0 0 1px rgba(0,0,0,0.5), 0 0 12px rgba(213,162,78,0.4)" : "none");
+  }
+
+  box(on) {
+    return "display:flex; align-items:center; justify-content:center; width:14px; height:14px; flex:0 0 14px; border-radius:3px; font-size:9px; line-height:1;" +
+      "border:1px solid " + (on ? "rgba(213,162,78,0.9)" : "rgba(255,255,255,0.22)") +
+      "; background:" + (on ? "#d5a24e" : "transparent") + "; color:#15130f";
+  }
+
+  renderVals() {
+    const dens = this.v("densidade", 1);
+    const mn = this.v("minBlobSize", 2);
+    const mx = this.v("maxBlobSize", 1650);
+    const gl = this.v("glow", 1);
+    const rc = this.v("reactivity", 1);
+    const ra = this.v("raio", 400);
+    const accent = this.v("accent", "#d5a24e");
+    const cores = this.v("cores", true), ids = this.v("ids", true);
+    const grain = this.v("grain", true), hov = this.v("hoverOnly", true);
+    const linhas = this.v("linhas", true);
+    const entrada = this.v("entrada", "Suave"), saida = this.v("saida", "Escalonado");
+    const IN = ["R\u00e1pida", "Suave", "Lenta", "Íris", "Escalonado"];
+    const OUT = ["R\u00e1pida", "Suave", "Lenta", "Rasto", "Íris", "Escalonado"];
+    const auto = !this.state.fileUrl;
+
+    return {
+      videoSrc: this.state.fileUrl || this.props.videoSrc || "c79-portfolio-bg.mp4",
+      grade: this.props.grade ?? "Teal & âmbar",
+      grain: grain,
+      pauseVideo: this.props.pauseVideo ?? false,
+      blobs: this.props.blobs ?? true,
+      blobAmount: this.props.blobAmount ?? 1,
+      hoverOnly: hov, raio: ra, densidade: dens,
+      minBlobSize: mn, maxBlobSize: mx,
+      glow: gl, reactivity: rc, accent: accent, cores: cores, ids: ids, linhas: linhas,
+      entrada: entrada, saida: saida,
+      cycleIn: () => this.setState({ entrada: IN[(IN.indexOf(entrada) + 1) % IN.length] }),
+      cycleOut: () => this.setState({ saida: OUT[(OUT.indexOf(saida) + 1) % OUT.length] }),
+
+      statRef: this.statRef, coverRef: this.coverRef,
+      open: this.state.panel, closed: !this.state.panel,
+      togglePanel: () => this.setState((s) => ({ panel: !s.panel })),
+
+      autoStyle: "width:100%; padding:9px 0; border-radius:7px; cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.3em; text-transform:uppercase; transition:filter 200ms ease; border:1px solid " +
+        (auto ? "rgba(213,162,78,0.9)" : "rgba(255,255,255,0.18)") +
+        "; background:" + (auto ? "linear-gradient(180deg,#e0ad57 0%,#c9913f 100%)" : "transparent") +
+        "; color:" + (auto ? "#1a1509" : "rgba(255,255,255,0.55)") +
+        "; box-shadow:" + (auto ? "0 6px 18px -8px rgba(213,162,78,0.7)" : "none"),
+      useAuto: () => {
+        if (this.state.fileUrl) URL.revokeObjectURL(this.state.fileUrl);
+        this.setState({ fileUrl: null });
+      },
+      sourceNote: auto ? "A usar o vídeo do site — ou" : "Ficheiro carregado — ou",
+      pickFile: (e) => {
+        const f = e.target.files && e.target.files[0];
+        if (!f) return;
+        if (this.state.fileUrl) URL.revokeObjectURL(this.state.fileUrl);
+        this.setState({ fileUrl: URL.createObjectURL(f) });
+      },
+
+      dragDens: this.drag("densidade", 0, 1, 0.01),
+      dragMin: this.drag("minBlobSize", 2, 400, 1),
+      dragMax: this.drag("maxBlobSize", 50, 5000, 50),
+      dragGlow: this.drag("glow", 0, 1, 0.01),
+      dragReact: this.drag("reactivity", 0, 1.5, 0.05),
+      dragRaio: this.drag("raio", 40, 420, 10),
+
+      densPct: this.pct(dens, 0, 1), densVal: dens.toFixed(2),
+      minPct: this.pct(mn, 2, 400), minVal: String(Math.round(mn)),
+      maxPct: this.pct(mx, 50, 5000), maxVal: String(Math.round(mx)),
+      glowPct: this.pct(gl, 0, 1), glowVal: gl.toFixed(2),
+      reactPct: this.pct(rc, 0, 1.5), reactVal: rc.toFixed(2),
+      raioPct: this.pct(ra, 40, 420), raioVal: String(Math.round(ra)),
+
+      swAmber: this.swatch("#d5a24e", accent === "#d5a24e"),
+      swDeep: this.swatch("#b8752e", accent === "#b8752e"),
+      swCream: this.swatch("#f0dcb4", accent === "#f0dcb4"),
+      swWhite: this.swatch("#ffffff", accent === "#ffffff"),
+      pickAmber: () => this.setState({ accent: "#d5a24e" }),
+      pickDeep: () => this.setState({ accent: "#b8752e" }),
+      pickCream: () => this.setState({ accent: "#f0dcb4" }),
+      pickWhite: () => this.setState({ accent: "#ffffff" }),
+
+      boxCores: this.box(cores), tickCores: cores ? "✓" : "",
+      boxIds: this.box(ids), tickIds: ids ? "✓" : "",
+      boxGrain: this.box(grain), tickGrain: grain ? "✓" : "",
+      boxHover: this.box(hov), tickHover: hov ? "✓" : "",
+      toggleCores: () => this.setState({ cores: !cores }),
+      toggleIds: () => this.setState({ ids: !ids }),
+      toggleGrain: () => this.setState({ grain: !grain }),
+      boxLinhas: this.box(linhas), tickLinhas: linhas ? "✓" : "",
+      toggleHover: () => this.setState({ hoverOnly: !hov }),
+      toggleLinhas: () => this.setState({ linhas: !linhas })
+    };
+  }
+}
+
+</script>
+</body>
+</html>

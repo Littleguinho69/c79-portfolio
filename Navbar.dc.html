@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @font-face { font-family: 'BNCringeSerifLight'; src: url('BNCringeSerifLight.ttf') format('truetype'); font-weight: 300 400; font-style: normal; font-display: swap; }
+    @keyframes c79-chroma-loop { 0% { text-shadow: 1.4px 0 1px rgba(90,205,220,0.4), -1.4px 0 1px rgba(240,165,70,0.4); } 30% { text-shadow: 3.4px -0.5px 1.2px rgba(90,205,220,0.46), -3.4px 0.5px 1.2px rgba(240,165,70,0.46); } 62% { text-shadow: 1.8px 0 1px rgba(90,205,220,0.36), -1.8px 0 1px rgba(240,165,70,0.36); } 100% { text-shadow: 1.4px 0 1px rgba(90,205,220,0.4), -1.4px 0 1px rgba(240,165,70,0.4); } }
+    @keyframes c79-chroma-loop-img { 0% { filter: drop-shadow(1.4px 0 1px rgba(90,205,220,0.36)) drop-shadow(-1.4px 0 1px rgba(240,165,70,0.36)); } 30% { filter: drop-shadow(3.4px -0.5px 1.2px rgba(90,205,220,0.42)) drop-shadow(-3.4px 0.5px 1.2px rgba(240,165,70,0.42)); } 62% { filter: drop-shadow(1.8px 0 1px rgba(90,205,220,0.32)) drop-shadow(-1.8px 0 1px rgba(240,165,70,0.32)); } 100% { filter: drop-shadow(1.4px 0 1px rgba(90,205,220,0.36)) drop-shadow(-1.4px 0 1px rgba(240,165,70,0.36)); } }
+    @keyframes c79-rec-blink { 0%, 44% { opacity: 1; } 62%, 88% { opacity: 0.25; } 100% { opacity: 1; } }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</helmet>
+<nav style="display:flex; align-items:center; justify-content:space-between; gap:24px; width:100%; max-width:1280px; margin:0 auto; padding:24px 32px; box-sizing:border-box; animation:c79-down 900ms cubic-bezier(.16,1,.3,1) both">
+  <a href="#" data-blob="" style="display:flex; align-items:center; gap:14px; text-decoration:none">
+    <img src="logo-c79.png" alt="" data-c79-logo="" style="height:38px; width:auto; display:block; animation:c79-chroma-loop-img 7200ms ease-in-out infinite">
+    <span style="font-family:'BNCringeSerifLight','Cormorant Garamond',serif; font-weight:400; font-size:36px; letter-spacing:-0.01em; line-height:1; color:hsl(0 0% 100%); animation:c79-chroma-loop 7200ms ease-in-out infinite">c79</span>
+  </a>
+
+  <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex; align-items:center; gap:32px">
+      <a href="#work" data-blob="" style="font-size:14px; color:hsl(240 4% 66%); text-decoration:none; transition:color 220ms ease" style-hover="color:hsl(0 0% 100%)">Work</a>
+      <a href="#expertise" data-blob="" style="font-size:14px; color:hsl(240 4% 66%); text-decoration:none; transition:color 220ms ease" style-hover="color:hsl(0 0% 100%)">Expertise</a>
+      <a href="#about" data-blob="" style="font-size:14px; color:hsl(240 4% 66%); text-decoration:none; transition:color 220ms ease" style-hover="color:hsl(0 0% 100%)">About</a>
+    </div>
+  </sc-if>
+
+  <a href="https://www.instagram.com/c7nove" target="_blank" rel="noopener noreferrer" aria-label="Instagram" data-blob="" style="display:flex; align-items:center; justify-content:center; width:38px; height:38px; color:rgba(255,255,255,0.9); animation:c79-chroma-loop-img 7200ms ease-in-out infinite; transition:color 220ms ease, transform 320ms cubic-bezier(.16,1,.3,1)" style-hover="color:#ffffff; transform:translateY(-1px)">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block">
+      <rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4"></rect>
+      <circle cx="12" cy="12" r="4.6"></circle>
+      <circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"></circle>
+    </svg>
+  </a>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { wide: true };
+
+  measure = () => {
+    const w = this.props.hostWidth || window.innerWidth || 0;
+    if (!w) return;
+    const next = w >= 768;
+    if (next !== this.state.wide) this.setState({ wide: next });
+  };
+
+  componentDidMount() {
+    this.measure();
+    requestAnimationFrame(this.measure);
+    window.addEventListener("resize", this.measure);
+    if (window.ResizeObserver) {
+      this.ro = new ResizeObserver(this.measure);
+      this.ro.observe(document.documentElement);
+    }
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.measure);
+    if (this.ro) { this.ro.disconnect(); this.ro = null; }
+  }
+
+  renderVals() {
+    return {
+      wide: this.state.wide,
+      instagramUrl: this.props.instagramUrl || "https://www.instagram.com/",
+      openContact: () => window.dispatchEvent(new CustomEvent("c79:contact"))
+    };
+  }
+}
+</script>
+</body>
+</html>

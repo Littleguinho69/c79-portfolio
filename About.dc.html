@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @font-face { font-family: 'BNCringeSerifLight'; src: url('BNCringeSerifLight.ttf') format('truetype'); font-weight: 300 400; font-style: normal; font-display: swap; }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <script src="./image-slot.js"></script>
+</helmet>
+<section id="about" style="position:relative; overflow:hidden; background:#0a0a0b; font-family:'Inter',sans-serif; color:#f5f1e8">
+  <div style="position:absolute; inset:0; opacity:0.2; mix-blend-mode:overlay; pointer-events:none; background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%222%22/></filter><rect width=%22200%22 height=%22200%22 filter=%22url(%23n)%22/></svg>'); background-size:200px 200px"></div>
+
+  <div style="position:relative; max-width:1280px; margin:0 auto; padding:140px 24px 130px; box-sizing:border-box">
+    <p style="margin:0 0 56px; font-size:12px; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:#c8974a">About</p>
+
+    <h2 style="margin:0 0 40px; max-width:900px; font-family:'Inter',sans-serif; font-weight:500; font-size:clamp(22px,2.9vw,38px); line-height:1.25; letter-spacing:-0.01em; text-transform:uppercase; color:#f5f1e8; text-wrap:pretty">Minhas inspirações vêm do cinema</h2>
+
+    <p style="margin:0; max-width:760px; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:300; font-style:italic; font-size:clamp(21px,2.1vw,27px); line-height:1.45; color:rgba(245,241,232,0.78); text-wrap:pretty">Venho do cinema, e trabalho perto do cinema asiático — que se afasta das regras de narrativa às quais Hollywood nos acostumou. Levo essa mesma ideologia para os meus projetos: imagens que sempre provocam alguma estranheza.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap:24px; margin-top:64px; padding-top:28px; border-top:1px solid rgba(255,255,255,0.14)">
+      <p style="margin:0; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:400; font-size:clamp(25px,2.7vw,33px); line-height:1.12; color:#f5f1e8">Park Chan-wook</p>
+      <p style="margin:0; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:400; font-size:clamp(25px,2.7vw,33px); line-height:1.12; color:#f5f1e8">Yorgos Lanthimos</p>
+      <p style="margin:0; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:400; font-size:clamp(25px,2.7vw,33px); line-height:1.12; color:#f5f1e8">Wong Kar-Wai</p>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:16px; margin-top:110px; padding-bottom:28px; border-bottom:1px solid rgba(255,255,255,0.14)">
+      <p style="margin:0; font-size:12px; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:#c8974a">Favoritos</p>
+      <a href="https://letterboxd.com/littleguinho/" target="_blank" rel="noopener noreferrer" style="font-size:14px; color:#d9a24a; text-decoration:none; padding-bottom:3px; border-bottom:1px solid rgba(217,162,74,0.4); transition:border-color 260ms ease" style-hover="border-bottom-color:#d9a24a">Me acompanhe no Letterboxd</a>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap:32px; max-width:860px; margin-top:40px">
+      <div>
+        <div style="position:relative; aspect-ratio:2 / 3; overflow:hidden; border-radius:3px; border:1px solid rgba(255,255,255,0.1); background:#111">
+          <image-slot id="poster-oldboy" shape="rect" placeholder="Capa de Oldboy"></image-slot>
+        </div>
+        <a href="https://letterboxd.com/film/oldboy/" target="_blank" rel="noopener noreferrer" style="display:block; margin-top:16px; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:400; font-size:25px; line-height:1.1; color:#f5f1e8; text-decoration:none; transition:color 220ms ease" style-hover="color:#f0dcb4">Oldboy</a>
+        <p style="margin:8px 0 0; font-size:11px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:rgba(245,241,232,0.5)">Park Chan-wook · 2003</p>
+        <p style="margin:10px 0 0; font-size:15px; letter-spacing:0.22em; color:#c8974a">★★★★★</p>
+      </div>
+
+      <div>
+        <div style="position:relative; aspect-ratio:2 / 3; overflow:hidden; border-radius:3px; border:1px solid rgba(255,255,255,0.1); background:#111">
+          <image-slot id="poster-fallen-angels" shape="rect" placeholder="Capa de Fallen Angels"></image-slot>
+        </div>
+        <a href="https://letterboxd.com/film/fallen-angels/" target="_blank" rel="noopener noreferrer" style="display:block; margin-top:16px; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:400; font-size:25px; line-height:1.1; color:#f5f1e8; text-decoration:none; transition:color 220ms ease" style-hover="color:#f0dcb4">Fallen Angels</a>
+        <p style="margin:8px 0 0; font-size:11px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:rgba(245,241,232,0.5)">Wong Kar-Wai · 1995</p>
+        <p style="margin:10px 0 0; font-size:15px; letter-spacing:0.22em; color:#c8974a">★★★★★</p>
+      </div>
+
+      <div>
+        <div style="position:relative; aspect-ratio:2 / 3; overflow:hidden; border-radius:3px; border:1px solid rgba(255,255,255,0.1); background:#111">
+          <image-slot id="poster-mad-god" shape="rect" placeholder="Capa de Mad God"></image-slot>
+        </div>
+        <a href="https://letterboxd.com/film/mad-god/" target="_blank" rel="noopener noreferrer" style="display:block; margin-top:16px; font-family:'BNCringeSerifLight','BN Cringe Serif Light','BNCringeSerif','Cormorant Garamond',serif; font-weight:400; font-size:25px; line-height:1.1; color:#f5f1e8; text-decoration:none; transition:color 220ms ease" style-hover="color:#f0dcb4">Mad God</a>
+        <p style="margin:8px 0 0; font-size:11px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:rgba(245,241,232,0.5)">Phil Tippett · 2021</p>
+        <p style="margin:10px 0 0; font-size:15px; letter-spacing:0.22em; color:#c8974a">★★★★★</p>
+      </div>
+    </div>
+  </div>
+</section>
+</x-dc>
+</body>
+</html>

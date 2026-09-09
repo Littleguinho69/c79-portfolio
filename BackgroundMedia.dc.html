@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @keyframes c79-drift { from { transform: scale(1.03) translate3d(0, 0.6%, 0); } to { transform: scale(1.1) translate3d(0, -1.2%, 0); } }
+  </style>
+</helmet>
+<div style="position:absolute; inset:0; z-index:0; overflow:hidden; background:radial-gradient(120% 90% at 50% 0%, #1a1512 0%, #0d0c0b 55%, #070708 100%)">
+  <video ref="{{ videoRef }}" src="{{ src }}" autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" preload="auto" crossOrigin="anonymous" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; background:transparent; filter:saturate(0.62) contrast(1.12) brightness(0.88) sepia(0.42); animation:c79-drift 52s ease-in-out infinite alternate; will-change:transform"></video>
+
+  <sc-if value="{{ isAmber }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute; inset:0; mix-blend-mode:color; background:linear-gradient(172deg, rgba(232,172,80,0.78) 0%, rgba(206,144,62,0.7) 52%, rgba(150,102,48,0.62) 100%)"></div>
+    <div style="position:absolute; inset:0; mix-blend-mode:overlay; background:linear-gradient(174deg, rgba(255,214,150,0.18) 0%, rgba(0,0,0,0) 46%, rgba(20,14,8,0.28) 100%)"></div>
+  </sc-if>
+
+  <sc-if value="{{ isTeal }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute; inset:0; mix-blend-mode:color; background:linear-gradient(168deg, rgba(234,174,82,0.74) 0%, rgba(150,140,110,0.5) 48%, rgba(56,120,132,0.66) 100%)"></div>
+    <div style="position:absolute; inset:0; mix-blend-mode:overlay; background:linear-gradient(172deg, rgba(255,214,150,0.16) 0%, rgba(0,0,0,0) 44%, rgba(8,26,32,0.32) 100%)"></div>
+  </sc-if>
+
+  <sc-if value="{{ isMono }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute; inset:0; backdrop-filter:grayscale(0.92); -webkit-backdrop-filter:grayscale(0.92)"></div>
+    <div style="position:absolute; inset:0; mix-blend-mode:color; background:linear-gradient(176deg, rgba(226,170,84,0.34) 0%, rgba(190,150,90,0.26) 100%)"></div>
+    <div style="position:absolute; inset:0; mix-blend-mode:overlay; background:linear-gradient(176deg, rgba(255,222,170,0.12) 0%, rgba(0,0,0,0) 46%, rgba(14,12,10,0.3) 100%)"></div>
+  </sc-if>
+
+  <div style="position:absolute; inset:0; background:rgba(8,7,6,0.28)"></div>
+
+  <sc-if value="{{ blobs }}" hint-placeholder-val="{{ true }}">
+    <canvas ref="{{ blobRef }}" style="position:absolute; inset:0; width:100%; height:100%; display:block; mix-blend-mode:screen; pointer-events:none"></canvas>
+  </sc-if>
+  <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,10,11,0) 42%, rgba(10,10,11,0.55) 78%, rgba(10,10,11,0.9) 100%)"></div>
+  <div style="position:absolute; left:-10%; right:-10%; top:-20%; height:84%; mix-blend-mode:screen; background:radial-gradient(55% 60% at 50% 50%, rgba(217,162,74,0.17) 0%, rgba(217,162,74,0.04) 46%, rgba(0,0,0,0) 78%); filter:blur(30px); pointer-events:none"></div>
+  <div style="position:absolute; inset:0; background:radial-gradient(74% 60% at 50% 44%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 62%, rgba(0,0,0,0.5) 100%)"></div>
+
+  <sc-if value="{{ grain }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute; inset:0; opacity:0.2; mix-blend-mode:overlay; background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22180%22 height=%22180%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%222%22/></filter><rect width=%22180%22 height=%22180%22 filter=%22url(%23n)%22/></svg>'); background-size:180px 180px"></div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;src&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;c79-portfolio-bg.mp4&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;grade&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Âmbar quente&quot;,&quot;Teal &amp; âmbar&quot;,&quot;Mono âmbar&quot;],&quot;default&quot;:&quot;Âmbar quente&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;paused&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;blobs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;blobAmount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:1.8,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;hoverOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;raio&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:400,&quot;min&quot;:40,&quot;max&quot;:420,&quot;step&quot;:10,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;densidade&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.01,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;minBlobSize&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:2,&quot;max&quot;:400,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;maxBlobSize&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1650,&quot;min&quot;:50,&quot;max&quot;:5000,&quot;step&quot;:50,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.01,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;reactivity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#d5a24e&quot;,&quot;#b8752e&quot;,&quot;#f0dcb4&quot;,&quot;#ffffff&quot;],&quot;default&quot;:&quot;#d5a24e&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;cores&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;ids&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;linhas&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;entrada&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Rápida&quot;,&quot;Suave&quot;,&quot;Lenta&quot;,&quot;Íris&quot;,&quot;Escalonado&quot;],&quot;default&quot;:&quot;Suave&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Blob track&quot;},&quot;saida&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Rápida&quot;,&quot;Suave&quot;,&quot;Lenta&quot;,&quot;Rasto&quot;,&quot;Íris&quot;,&quot;Escalonado&quot;],&quot;default&quot;:&quot;Escalonado&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Blob track&quot;}}">
+const SW = 168, SH = 94;
+
+class Component extends DCLogic {
+  videoRef = React.createRef();
+  blobRef = React.createRef();
+  raf = 0;
+  visible = true;
+  hover = false;
+  hoverK = 0;
+  activeEl = null;
+  mx = -9999;
+  my = -9999;
+  tracks = [];
+  nextId = 1;
+  energy = 0;
+  prevMean = 0;
+  last = 0;
+
+  p(key, dflt) {
+    const v = this.props[key];
+    return v !== undefined && v !== null && v !== "" ? v : dflt;
+  }
+
+  rgb(hex) {
+    const h = String(hex || "#d5a24e").replace("#", "");
+    const n = parseInt(h.length === 3 ? h.split("").map(c => c + c).join("") : h, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+
+  sync() {
+    const v = this.videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    if (this.props.paused) v.pause();
+    else { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+  }
+
+  setup() {
+    const n = SW * SH;
+    if (!this.sctx) {
+      this.sample = document.createElement("canvas");
+      this.sample.width = SW; this.sample.height = SH;
+      this.sctx = this.sample.getContext("2d", { willReadFrequently: true });
+    }
+    if (!this.lum || this.lum.length !== n) {
+      this.lum = new Float32Array(n);
+      this.tmp = new Float32Array(n);
+      this.blurBuf = new Float32Array(n);
+      this.diff = new Float32Array(n);
+      this.mask = new Uint8Array(n);
+      this.lab = new Int32Array(n);
+      this.parent = new Int32Array((n >> 1) + 2);
+    }
+  }
+
+  find(a) { const p = this.parent; while (p[a] !== a) { p[a] = p[p[a]]; a = p[a]; } return a; }
+  union(a, b) { a = this.find(a); b = this.find(b); if (a !== b) this.parent[b > a ? b : a] = b > a ? a : b; }
+
+  blur(r) {
+    const L = this.lum, T = this.tmp, B = this.blurBuf, d = 2 * r + 1;
+    for (let y = 0; y < SH; y++) {
+      const row = y * SW;
+      let acc = 0;
+      for (let k = -r; k <= r; k++) acc += L[row + (k < 0 ? 0 : k > SW - 1 ? SW - 1 : k)];
+      for (let x = 0; x < SW; x++) {
+        T[row + x] = acc / d;
+        const o = x - r, i2 = x + r + 1;
+        acc += L[row + (i2 > SW - 1 ? SW - 1 : i2)] - L[row + (o < 0 ? 0 : o)];
+      }
+    }
+    for (let x = 0; x < SW; x++) {
+      let acc = 0;
+      for (let k = -r; k <= r; k++) acc += T[(k < 0 ? 0 : k > SH - 1 ? SH - 1 : k) * SW + x];
+      for (let y = 0; y < SH; y++) {
+        B[y * SW + x] = acc / d;
+        const o = y - r, i2 = y + r + 1;
+        acc += T[(i2 > SH - 1 ? SH - 1 : i2) * SW + x] - T[(o < 0 ? 0 : o) * SW + x];
+      }
+    }
+  }
+
+  detect(dens) {
+    const L = this.lum, M = this.mask, lab = this.lab, P = this.parent, D = this.diff, B = this.blurBuf;
+    this.blur(6);
+    let sq = 0;
+    for (let i = 0; i < D.length; i++) { const v = L[i] - B[i]; D[i] = v; sq += v * v; }
+    const sigma = Math.sqrt(sq / D.length) || 1e-4;
+    const thr = sigma * (2.35 - dens * 2.05);
+    for (let i = 0; i < M.length; i++) M[i] = (D[i] > thr && L[i] > 0.05) ? 1 : 0;
+
+    let next = 1;
+    const cap = P.length - 1;
+    for (let y = 0; y < SH; y++) {
+      const row = y * SW;
+      for (let x = 0; x < SW; x++) {
+        const i = row + x;
+        if (!M[i]) { lab[i] = 0; continue; }
+        const up = y > 0 ? lab[i - SW] : 0;
+        const lf = x > 0 ? lab[i - 1] : 0;
+        if (!up && !lf) { if (next >= cap) { lab[i] = 0; continue; } P[next] = next; lab[i] = next; next++; }
+        else if (up && lf) { lab[i] = up < lf ? up : lf; if (up !== lf) this.union(up, lf); }
+        else lab[i] = up || lf;
+      }
+    }
+
+    const boxes = new Map();
+    for (let y = 0; y < SH; y++) {
+      const row = y * SW;
+      for (let x = 0; x < SW; x++) {
+        const l = lab[row + x];
+        if (!l) continue;
+        const r = this.find(l);
+        let b = boxes.get(r);
+        if (!b) { b = { x0: x, y0: y, x1: x, y1: y, n: 0, sum: 0, cx: 0, cy: 0, lum: 0 }; boxes.set(r, b); }
+        if (x < b.x0) b.x0 = x;
+        if (x > b.x1) b.x1 = x;
+        if (y < b.y0) b.y0 = y;
+        if (y > b.y1) b.y1 = y;
+        b.n++; b.cx += x; b.cy += y; b.sum += D[row + x];
+      }
+    }
+
+    const min = this.p("minBlobSize", 2), max = this.p("maxBlobSize", 1650);
+    const out = [];
+    boxes.forEach((b) => {
+      if (b.n < min || b.n > max) return;
+      b.cx /= b.n; b.cy /= b.n;
+      b.lum = Math.min(1, (b.sum / b.n) / (thr + 1e-5) * 0.5);
+      out.push(b);
+    });
+    out.sort((a, b) => b.n - a.n);
+    return out.slice(0, 44);
+  }
+
+  track(blobs) {
+    const live = this.tracks;
+    for (let i = 0; i < live.length; i++) live[i].seen = false;
+    for (const b of blobs) {
+      let best = null, bd = 9;
+      for (const t of live) {
+        if (t.seen) continue;
+        const d = Math.hypot(t.cx - b.cx, t.cy - b.cy);
+        if (d < bd) { bd = d; best = t; }
+      }
+      if (best) {
+        best.seen = true; best.ttl = 22;
+        best.cx += (b.cx - best.cx) * 0.32;
+        best.cy += (b.cy - best.cy) * 0.32;
+        best.x0 += (b.x0 - best.x0) * 0.3; best.x1 += (b.x1 - best.x1) * 0.3;
+        best.y0 += (b.y0 - best.y0) * 0.3; best.y1 += (b.y1 - best.y1) * 0.3;
+        best.n = b.n; best.lum = b.lum;
+        best.age = Math.min(1, best.age + 0.09);
+      } else {
+        live.push({ id: this.nextId++, cx: b.cx, cy: b.cy, x0: b.x0, x1: b.x1, y0: b.y0, y1: b.y1, n: b.n, lum: b.lum, ttl: 22, age: 0, seen: true });
+      }
+    }
+    if (this.nextId > 999) this.nextId = 1;
+    this.tracks = live.filter((t) => { if (!t.seen) { t.ttl -= 2; t.age = Math.max(0, t.age - 0.06); } return t.ttl > 0; });
+    return this.tracks;
+  }
+
+  frame = (now) => {
+    this.raf = requestAnimationFrame(this.frame);
+    try { this.tick(now); } catch (e) { this.stop(); }
+  };
+
+  tick(now) {
+    const cv = this.blobRef.current, v = this.videoRef.current;
+    if (!cv || !v) return;
+    if (now - this.last < 32) return;
+    this.last = now;
+    if (document.hidden || !this.visible || v.readyState < 2) return;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const W = Math.round(cv.clientWidth * dpr), H = Math.round(cv.clientHeight * dpr);
+    if (!W || !H) return;
+    if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+    const ctx = cv.getContext("2d");
+    this.setup();
+
+    const hoverOnly = this.p("hoverOnly", true);
+    const hk = this.hover || !hoverOnly ? 1 : 0;
+    const rising = hk > this.hoverK;
+    const modeIn = this.p("entrada", "Suave"), modeOut = this.p("saida", "Escalonado");
+    const mode = rising ? modeIn : modeOut;
+    const rate = rising
+      ? (modeIn === "Rápida" ? 0.26 : modeIn === "Lenta" ? 0.055 : 0.13)
+      : (modeOut === "Rápida" ? 0.15 : modeOut === "Rasto" ? 0.04 : modeOut === "Lenta" ? 0.03 : 0.065);
+    this.hoverK += (hk - this.hoverK) * rate;
+    if (hoverOnly && this.hoverK < 0.003) { ctx.clearRect(0, 0, W, H); return; }
+
+    let data;
+    try {
+      this.sctx.drawImage(v, 0, 0, SW, SH);
+      data = this.sctx.getImageData(0, 0, SW, SH).data;
+    } catch (e) { this.stop(); return; }
+
+    const L = this.lum;
+    let sum = 0;
+    for (let i = 0, p = 0; i < L.length; i++, p += 4) {
+      const l = (data[p] * 0.299 + data[p + 1] * 0.587 + data[p + 2] * 0.114) / 255;
+      L[i] = l; sum += l;
+    }
+    const mean = sum / L.length;
+
+    const d = Math.abs(mean - this.prevMean);
+    this.prevMean = mean;
+    const hit = Math.min(1, d * 34) * this.p("reactivity", 1);
+    this.energy += (hit - this.energy) * (hit > this.energy ? 0.5 : 0.06);
+
+    const tracks = this.track(this.detect(this.p("densidade", 1)));
+
+    const kx = W / SW, ky = H / SH;
+    const amt = this.p("blobAmount", 1);
+    const glow = this.p("glow", 1);
+    const showIds = this.p("ids", true);
+    const multi = this.p("cores", true);
+    const [ar, ag, ab] = this.rgb(this.p("accent", "#d5a24e"));
+    const pulse = 1 + this.energy * 0.16;
+
+    const rect = cv.getBoundingClientRect();
+    const px = (this.mx - rect.left) * dpr, py = (this.my - rect.top) * dpr;
+    const R = Math.max(1, this.p("raio", 400) * dpr);
+
+    const linhas = this.p("linhas", true);
+    let lx = 0, ly = 0, hasLogo = false;
+    if (linhas) {
+      if (!this.logoEl || !this.logoEl.isConnected) this.logoEl = document.querySelector("[data-c79-logo]");
+      if (this.logoEl) {
+        const lb = this.logoEl.getBoundingClientRect();
+        if (lb.width || lb.height) {
+          lx = (lb.left + lb.width / 2 - rect.left) * dpr;
+          ly = (lb.top + lb.height / 2 - rect.top) * dpr;
+          hasLogo = true;
+        }
+      }
+    }
+
+    let rx0 = 0, ry0 = 0, rx1 = 0, ry1 = 0, boxed = false;
+    if (hoverOnly && this.activeEl && this.activeEl.isConnected) {
+      const b = this.activeEl.getBoundingClientRect();
+      if (b.width || b.height) {
+        const pad = 6 * dpr;
+        rx0 = (b.left - rect.left) * dpr - pad;
+        ry0 = (b.top - rect.top) * dpr - pad;
+        rx1 = (b.right - rect.left) * dpr + pad;
+        ry1 = (b.bottom - rect.top) * dpr + pad;
+        boxed = true;
+      }
+    }
+
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineJoin = "round";
+    ctx.font = "500 " + Math.round(9.5 * dpr) + "px 'IBM Plex Mono', monospace";
+    let shown = 0, cover = 0;
+
+    for (const t of tracks) {
+      const w = (t.x1 - t.x0 + 1) * kx * pulse;
+      const h = (t.y1 - t.y0 + 1) * ky * pulse;
+      const x = t.cx * kx - w / 2;
+      const y = t.cy * ky - h / 2;
+
+      let f = 1, kb = this.hoverK;
+      if (hoverOnly) {
+        const bx = t.cx * kx, by = t.cy * ky;
+        let dx, dy;
+        dx = bx - px; dy = by - py;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const Reff = mode === "Íris" ? R * (0.18 + 0.82 * this.hoverK) : R;
+        const q = 1 - dist / Reff;
+        if (q <= 0) continue;
+        f = q * q * (3 - 2 * q);
+        if (mode === "Rasto") kb = Math.sqrt(this.hoverK);
+        else if (mode === "Escalonado") {
+          const off = Math.min(1, dist / R) * 0.55;
+          kb = Math.max(0, Math.min(1, (this.hoverK - off) / (1 - off)));
+        }
+      }
+      const gate = f * kb;
+      if (gate < 0.02) continue;
+      shown++; cover += t.n;
+
+      const hot = Math.min(1, t.lum * 0.9 + 0.22);
+      let cr = ar, cg = ag, cb = ab;
+      if (multi) {
+        if (hot > 0.78) { cr = 255; cg = 240; cb = 214; }
+        else if (hot > 0.5) { cr = 240; cg = 180; cb = 109; }
+      }
+      const base = cr + "," + cg + "," + cb;
+      const a = t.age * (0.34 + hot * 0.5) * (0.82 + this.energy * 0.3) * (0.3 + gate * 0.85) * amt;
+
+      const dotX = t.cx * kx, dotY = t.cy * ky;
+
+      if (hasLogo) {
+        const vx = dotX - lx, vy = dotY - ly;
+        const len = Math.hypot(vx, vy) || 1;
+        const bend = (t.id % 2 ? 1 : -1) * len * (0.13 + 0.05 * Math.sin(now / 1400 + t.id));
+        const qx = lx + vx * 0.5 - (vy / len) * bend;
+        const qy = ly + vy * 0.5 + (vx / len) * bend;
+        const g = ctx.createLinearGradient(lx, ly, dotX, dotY);
+        g.addColorStop(0, "rgba(" + base + ",0)");
+        g.addColorStop(0.22, "rgba(" + base + "," + Math.min(0.9, a * 0.5).toFixed(3) + ")");
+        g.addColorStop(1, "rgba(" + base + "," + Math.min(1, a * 1.45).toFixed(3) + ")");
+        ctx.shadowColor = "rgba(" + base + "," + (glow * 0.7).toFixed(3) + ")";
+        ctx.shadowBlur = glow * 8 * dpr;
+        ctx.strokeStyle = g;
+        ctx.lineWidth = 1.35 * dpr;
+        ctx.beginPath();
+        ctx.moveTo(lx, ly);
+        ctx.quadraticCurveTo(qx, qy, dotX, dotY);
+        ctx.stroke();
+      }
+
+      ctx.shadowColor = "rgba(" + base + "," + (glow * 0.85).toFixed(3) + ")";
+      ctx.shadowBlur = glow * 22 * dpr;
+
+      ctx.strokeStyle = "rgba(" + base + "," + a.toFixed(3) + ")";
+      ctx.lineWidth = 1.15 * dpr;
+      ctx.strokeRect(Math.round(x) + 0.5, Math.round(y) + 0.5, Math.round(w), Math.round(h));
+
+      const tick = Math.min(w, h) * 0.26;
+      ctx.lineWidth = 1.9 * dpr;
+      ctx.strokeStyle = "rgba(" + base + "," + (a * 1.25).toFixed(3) + ")";
+      ctx.beginPath();
+      ctx.moveTo(x, y + tick); ctx.lineTo(x, y); ctx.lineTo(x + tick, y);
+      ctx.moveTo(x + w - tick, y + h); ctx.lineTo(x + w, y + h); ctx.lineTo(x + w, y + h - tick);
+      ctx.stroke();
+
+      ctx.shadowBlur = 0;
+      const cd = (1.6 + this.energy * 1.4) * dpr;
+      ctx.fillStyle = "rgba(" + base + "," + Math.min(0.95, a * 2).toFixed(3) + ")";
+      ctx.fillRect(t.cx * kx - cd, t.cy * ky - cd, cd * 2, cd * 2);
+
+      if (showIds && t.age > 0.45 && w > 22 * dpr) {
+        ctx.fillStyle = "rgba(" + base + "," + (a * 1.5).toFixed(3) + ")";
+        ctx.fillText(String(t.id).padStart(3, "0"), x, y - 5 * dpr);
+      }
+    }
+    ctx.shadowBlur = 0;
+
+    this.sc = (this.sc || 0) + 1;
+    if (this.sc % 5 === 0) {
+      window.dispatchEvent(new CustomEvent("c79:bt", {
+        detail: { shown: shown, blobs: tracks.length, cover: cover / L.length }
+      }));
+    }
+  }
+
+  onOver = (e) => {
+    if (e.pointerType === "touch") return;
+    const t = e.target && e.target.closest ? e.target.closest("[data-blob]") : null;
+    if (!t) return;
+    this.hover = true;
+    this.activeEl = t;
+    this.mx = e.clientX; this.my = e.clientY;
+  };
+
+  onOut = (e) => {
+    const to = e.relatedTarget;
+    if (to && to.closest && to.closest("[data-blob]")) return;
+    this.hover = false;
+  };
+
+  onMove = (e) => { if (this.hover) { this.mx = e.clientX; this.my = e.clientY; } };
+  onBlur = () => { this.hover = false; };
+
+  start() {
+    if (this.raf || !this.blobRef.current) return;
+    if (!this.io && window.IntersectionObserver) {
+      this.io = new IntersectionObserver((es) => { this.visible = es[0].isIntersecting; }, { threshold: 0 });
+      this.io.observe(this.blobRef.current);
+    }
+    this.raf = requestAnimationFrame(this.frame);
+  }
+
+  stop() { if (this.raf) cancelAnimationFrame(this.raf); this.raf = 0; }
+
+  componentDidMount() {
+    this.sync();
+    if ((this.props.blobs ?? true) && !this.props.paused) this.start();
+    document.addEventListener("pointerover", this.onOver, true);
+    document.addEventListener("pointerout", this.onOut, true);
+    document.addEventListener("pointermove", this.onMove, { passive: true });
+    window.addEventListener("blur", this.onBlur);
+  }
+
+  componentDidUpdate() {
+    this.sync();
+    if ((this.props.blobs ?? true) && !this.props.paused) this.start(); else this.stop();
+  }
+
+  componentWillUnmount() {
+    this.stop();
+    document.removeEventListener("pointerover", this.onOver, true);
+    document.removeEventListener("pointerout", this.onOut, true);
+    document.removeEventListener("pointermove", this.onMove);
+    window.removeEventListener("blur", this.onBlur);
+    if (this.io) { this.io.disconnect(); this.io = null; }
+  }
+
+  renderVals() {
+    const grade = this.props.grade ?? "Âmbar quente";
+    return {
+      videoRef: this.videoRef,
+      blobRef: this.blobRef,
+      blobs: (this.props.blobs ?? true) && !this.props.paused,
+      src: this.props.src ?? "c79-portfolio-bg.mp4",
+      grain: this.props.grain ?? true,
+      isAmber: grade === "Âmbar quente",
+      isTeal: grade === "Teal & âmbar",
+      isMono: grade === "Mono âmbar"
+    };
+  }
+}
+
+</script>
+</body>
+</html>
